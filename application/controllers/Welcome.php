@@ -39,11 +39,11 @@ class Welcome extends CI_Controller
 						redirect('Welcome');
 					}
 				} else {
-					$this->session->set_flashdata("error", 'Masukan yang benar!!');
+					$this->session->set_flashdata("error", 'Masukan username yang benar!!');
 					redirect('Welcome');
 				}
 			} else {
-				$this->session->set_flashdata("error", 'Masukan yang benar!!');
+				$this->session->set_flashdata("error", 'Masukan password yang benar!!');
 				redirect('Welcome');
 			}
 		}
@@ -63,12 +63,14 @@ class Welcome extends CI_Controller
 		// die;
 
 		$this->db->insert('user', $data);
+		
 		redirect('admin/petugas');
 	}
 
 	public function logout()
 	{
 		$this->session->sess_destroy();
+
 		redirect('Welcome');
 	}
 }

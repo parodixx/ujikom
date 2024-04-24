@@ -27,7 +27,7 @@
                             <div class="mb-3">
                                 <label for="" class="form-label">Member</label>
                                 <select name="member" id="member" class="form-control">
-                                    <option value="-">-</option>
+                                    <option disabled selected> - </option>
                                     <?php foreach ($pelanggan1 as $pel) : ?>
                                         <option value="<?= $pel->nama_pelanggan; ?>"><?= $pel->nama_pelanggan; ?></option>
                                     <?php endforeach; ?>
@@ -123,7 +123,7 @@
                                                 <span class="fw-bold fs-5">Kembalian :</span> <span class="fw-bold fs-5" id="kembalian"> 0</span>
                                             </div>
                                         </div>
-                                        <button  class="btn btn-success" style="border-radius: 1px" id="bayar">Bayar</button>
+                                        <button class="btn btn-success" style="border-radius: 1px" id="bayar">Bayar</button>
                                     </div>
                                 </div>
                             </div>
@@ -154,10 +154,16 @@
         let member = $('#member').val();
         let qty = parseFloat($('#qty').val()); // Mengubah qty menjadi angka
         let total = hargaProduk * qty;
-        // let diskon = parseFloat($('#diskon').val());
-        // let potongan = diskon / hargaProduk;
+
+        let strip;
+        if (member == null) {
+            strip = '-'
+        } else {
+            strip = member
+        };
+        console.log(strip)
+
         let total2 = $.number(total, 0, ',', '.');
-        // let total3 = total - diskon;
 
         if (!isNaN(hargaProduk)) {
             let totalHarga = 0;
@@ -167,7 +173,7 @@
                 '<td class="kode_produk">' + kodeProduk + '</td>' +
                 '<td class="nama_produk">' + namaProduk + '</td>' +
                 '<td class="harga">' + $.number(hargaProduk, 0, ',', '.') + '</td>' +
-                '<td class="member">' + member + '</td>' +
+                '<td class="member">' + strip + '</td>' +
                 '<td class="qty">' + qty + '</td>' +
                 '<td class="total">' + total2 + '</td>' +
                 // '<td class="diskon">' + $.number(diskon, 0, ',', '.') + '</td>' +
@@ -229,6 +235,7 @@
             let kembalian = $.number(total3, 0, ',', '.');
             $('#pembayaran').text(totalBayar);
             $('#kembalian').text(kembalian);
+
         }
     });
 </script>
@@ -288,8 +295,85 @@
 
 <script>
     $(document).ready(function() {
-        $('#bayar').on('click', function () {
-            
+        $('#bayar').on('click', function() {
+            // let data = [];
+            // let namakasir = $('#kasir').val();
+            // let nofaktur = $('#no_faktur').val();
+            // let tanggal = $('#tanggal').val();
+            // let member = $('#member').val();
+            // let total = $('#total').text();
+            // let pembayaran = $('#uang').text();
+            // let kembalian = $('#kembalian').text();
+            // let diskon = $('#diskon2').text();
+            let data = [];
+            let namakasir = $('#kasir').val();
+            let nofaktur = $('#no_faktur').val();
+            let tanggal = $('#tanggal').val();
+            let member = $('#member').val();
+            let total = $('#total').text();
+            let pembayaran = $('#pembayaran').text();
+            let kembalian = $('#kembalian').text();
+            let diskon = $('#diskon2').text();
+            // $('#tambahproduk tr').each(function() {
+            //     let row = {}
+            //     row.kodeproduk = $(this).find('.kode_produk').text()
+            //     row.namaproduk = $(this).find('.nama_produk').text();
+            //     row.hargaproduk = $(this).find('.harga').text();
+            //     row.qty = $(this).find('.qty').text();
+            //     row.totalHarga = $(this).find('.total').text();
+            //     data.push(row)
+
+            // })
+            $('#tambahproduk tr').each(function() {
+                let row = {}
+                row.kodeProduk = $(this).find('.kode_produk').text()
+                row.namaProduk = $(this).find('.nama_produk').text();
+                row.hargaProduk = $(this).find('.harga').text();
+                row.qty = $(this).find('.qty').text();
+                row.totalHarga = $(this).find('.total').text();
+                data.push(row)
+            })
+            // $.ajax({
+            //     type: "post",
+            //     url: "<?= base_url('kelola/saveSiTransaksi'); ?>",
+            //     data: {
+            //         kasir:namakasir,
+            //         no_faktur:nofaktur,
+            //         tanggal:tanggal,
+            //         member:member,
+            //         total:total,
+            //         pembayaran:pembayaran,
+            //         kembalian:kembalian,
+            //         diskon2:diskon,
+            //         data:data
+            //     } ,
+            //     success: function (response) {
+            //         console.log(response)
+            //     },
+            //     error:function (error) {
+            //         console.log(error)
+            //     }
+
+            // });
+            $.ajax({
+                type: "POST",
+                url: "<?= base_url('kelola/saveSiTransaksi') ?>",
+                data: {
+                    kasir: namakasir,
+                    no_faktur: nofaktur,
+                    tanggal: tanggal,
+                    member: member,
+                    total: total,
+                    pembayaran: pembayaran,
+                    kembalian: kembalian,
+                    diskon2: diskon,
+                    data: data
+                },
+                success: function(response) {},
+                error: function(error) {
+                    console.log(error)
+                }
+            });
         })
     });
 </script>

@@ -31,7 +31,7 @@
                                             <td><span class="badge rounded-pill <?= $p->is_active == 'aktif' ? 'bg-success' : 'bg-danger'; ?>" id="status"><?= $p->is_active; ?></span></td>
                                             <td class="btn-group">
                                                 <a href="<?= base_url('kelola/updatePetugas/') . $p->id; ?>" type="submit" class="btn btn-warning"><i class="fas fa-pen"></i></a>
-                                                <a href="<?= base_url('kelola/updateStatus/') . $p->id; ?>" type="submit" class="btn btn-danger" onclick="return confirm('Apakah yakin petugas akan di nonaktifkan?')"><i class="fas fa-ban"></i></a>
+                                                <a href="<?= base_url('kelola/updateStatus/') . $p->id; ?>" type="submit" class="btn btn-danger" onclick="return confirm('Apakah yakin petugas akan di nonaktifkan permanen?')"><i class="fas fa-ban"></i></a>
                                                 <a href="<?= base_url('kelola/deletePetugas/') . $p->id; ?>" type="submit" class="btn btn-danger" onclick="return confirm('Apakah yakin petugas akan di hapus?')"><i class="fas fa-trash"></i></a>
                                             </td>
                                         </tr>
